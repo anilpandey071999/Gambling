@@ -1,0 +1,101 @@
+Q1) How is gas usage calculated?
+-> Gas is a unit that measures the amount of computational effort that it will take to execute certain operations.
+-> Every single operation that takes part in Ethereum, be it a simple transaction,
+    or a smart contract, or even an ICO takes some amount of Gas.
+
+======================================================================
+Q2) What’s the difference between storage, memory, and stack?
+-> Storage:- Data in storage are stored permanently. The storage is a key-value store.
+-> Memory is a byte array with a slot size of 256 bits. Data are stored only during function execution. After that, they are deleted.
+-> Stack:- The stack is an internal place where temporary variables are stored in 32-bit slots. It is usually for value type in functions.
+
+======================================================================
+Q3) What are interfaces in solidity? Write an example interface.
+->Interfaces are similar to abstract contracts and are created using interface keyword. Following are the key characteristics of an interface.
+Interface can not have any function with implementation.
+Functions of an interface can be only of type external.
+Interface can not have constructor.
+Interface can not have state variables.
+Interface can have enum, structs which can be accessed using interface name dot notation
+->EXAMPLE:-
+
+pragma solidity ^0.5.0;
+
+interface Calculator {
+   function getResult() external view returns(uint);
+}
+contract Test is Calculator {
+   constructor() public {}
+   function getResult() external view returns(uint){
+      uint a = 1; 
+      uint b = 2;
+      uint result = a + b;
+      return result;
+   }
+}
+
+======================================================================
+Q4) What is a proxy contract? Provide a code example of how it can be used.
+->Smart contracts are immutable, by design. On the other hand, software quality heavily depends on the ability to upgrade and patch source code to produce iterative releases. 
+->Even though blockchain-based software profits significantly from the technology’s immutability, still a certain degree of mutability is needed for bug fixing and potential product improvements.
+->Example:-
+Now, let's create a contract named TodoList in the contracts folder
+// contracts/TodoList.sol
+pragma solidity ^0.6.3;
+
+contract TodoList {
+    string[] private list;
+
+    // Emitted when the storeda new item is added to the list
+    event ItemAdded(string item);
+
+    // Adds a new item in the list
+    function addItem(string memory newItem) public {
+        list.push(newItem);
+        emit ItemAdded(newItem);
+    }
+
+    // Gets the item from the list according to index
+    function getListItem(uint256 index)
+        public
+        view
+        returns (string memory item)
+    {
+        return list[index];
+    }
+}
+
+To create TodoList2 just add a new getListSize() function in the above contract.  
+	
+// contracts/TodoList2.sol
+pragma solidity ^0.6.3;
+
+contract TodoList2 {
+    string[] private list;
+
+    // Emitted when the storeda new item is added to the list
+    event ItemAdded(string item);
+
+    // Adds a new item in the list
+    function addItem(string memory newItem) public {
+        list.push(newItem);
+        emit ItemAdded(newItem);
+    }
+
+    // Gets the item from the list according to index
+    function getListItem(uint256 index)
+        public
+        view
+        returns (string memory item)
+    {
+        return list[index];
+    }
+
+    // Gets the size of the list
+    function getListSize() public view returns (uint256 size) {
+        return list.length;
+    }
+}
+
+======================================================================
+0x94432257371d8D23a10116d8CFc43046740DD646
